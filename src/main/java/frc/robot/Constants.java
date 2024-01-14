@@ -28,14 +28,14 @@ public final class Constants {
   
   public static final int frontRightDrive = 1;
   public static final int frontRightTurn = 2;
-  public static final int frontRightCanCoder = 0; //the cancoder ones are probably not right
+  public static final int frontRightCanCoder = 1; //the cancoder ones are probably not right
   
   public static final int backLeftDrive = 5;
   public static final int backLeftTurn = 0;
-  public static final int backLeftCanCoder = 0; //the cancoder ones are probably not right
+  public static final int backLeftCanCoder = 2; //the cancoder ones are probably not right
   
   public static final int backRightDrive = 3;
   public static final int backRightTurn = 4; 
-  public static final int backRightCanCoder = 0; //the cancoder ones are probably not right
+  public static final int backRightCanCoder = 3; //the cancoder ones are probably not right
 
 }
