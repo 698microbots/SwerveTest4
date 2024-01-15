@@ -46,10 +46,34 @@ public class Robot extends TimedRobot {
     // block in order for anything in the Command-based framework to work.
     CommandScheduler.getInstance().run();
     SmartDashboard.putNumber("Robot Yaw: ", m_robotContainer.driveTrain.getRobotAngle());
-    SmartDashboard.putNumber("FL Encoders: ", m_robotContainer.driveTrain.getFLCanCoders());
-    SmartDashboard.putNumber("BL Encoders: ", m_robotContainer.driveTrain.getBLCanCoders());
-    SmartDashboard.putNumber("FR Encoders: ", m_robotContainer.driveTrain.getFRCanCoders());
-    SmartDashboard.putNumber("BR Encoders: ", m_robotContainer.driveTrain.getBRCanCoders());    
+    SmartDashboard.putNumber("FL CanCoders: ", m_robotContainer.driveTrain.getFLCanCoders());
+    SmartDashboard.putNumber("BL CanCoders: ", m_robotContainer.driveTrain.getBLCanCoders());
+    SmartDashboard.putNumber("FR CanCoders: ", m_robotContainer.driveTrain.getFRCanCoders());
+    SmartDashboard.putNumber("BR CanCoders: ", m_robotContainer.driveTrain.getBRCanCoders());    
+
+    SmartDashboard.putNumber("FL Drive: ", m_robotContainer.driveTrain.getFLDrive());
+    SmartDashboard.putNumber("BL Drive: ", m_robotContainer.driveTrain.getBLDrive());
+    SmartDashboard.putNumber("FR Drive: ", m_robotContainer.driveTrain.getFRDrive());
+    SmartDashboard.putNumber("BR Drive: ", m_robotContainer.driveTrain.getBRDrive());     
+
+    SmartDashboard.putNumber("FL Turn: ", m_robotContainer.driveTrain.getFLTurn());
+    SmartDashboard.putNumber("BL Turn: ", m_robotContainer.driveTrain.getBLTurn());
+    SmartDashboard.putNumber("FR Turn: ", m_robotContainer.driveTrain.getFRTurn());
+    SmartDashboard.putNumber("BR Turn: ", m_robotContainer.driveTrain.getBRTurn()); 
+   
+    SmartDashboard.putNumber("Left Y", m_robotContainer.xboxController.getRawAxis(0) * -1);
+    SmartDashboard.putNumber("Left X", m_robotContainer.xboxController.getRawAxis(1));
+    SmartDashboard.putNumber("Right X", m_robotContainer.xboxController.getRawAxis(4));
+
+    SmartDashboard.putNumber("FL Optimized", m_robotContainer.driveTrain.getFLOpAngle());
+    SmartDashboard.putNumber("BL Optimized", m_robotContainer.driveTrain.getBLOpAngle());
+    SmartDashboard.putNumber("FR Optimized", m_robotContainer.driveTrain.getFROpAngle());
+    SmartDashboard.putNumber("BR Optimized", m_robotContainer.driveTrain.getBROpAngle());
+
+    SmartDashboard.putNumber("X Velocity", m_robotContainer.driveTrain.getXVelocity());
+    SmartDashboard.putNumber("Y Velocity", m_robotContainer.driveTrain.getYVelocity());
+
+
   }
 
   /** This function is called once each time the robot enters Disabled mode. */
@@ -87,7 +111,10 @@ public class Robot extends TimedRobot {
 
   /** This function is called periodically during operator control. */
   @Override
-  public void teleopPeriodic() {}
+  public void teleopPeriodic() {
+
+
+  }
 
   @Override
   public void testInit() {

@@ -26,7 +26,7 @@ public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   public  DriveTrain driveTrain = new DriveTrain();
-  private XboxController xboxController = new XboxController(0);
+  public XboxController xboxController = new XboxController(0);
 
   // Replace with CommandPS4Controller or CommandJoystick if needed
   private final CommandXboxController m_driverController =
@@ -38,8 +38,8 @@ public class RobotContainer {
     driveTrain.setDefaultCommand(new SwerveJoystickDrive(
       driveTrain,
       ()-> xboxController.getRawAxis(0),
-      ()-> xboxController.getRawAxis(0),
-      ()-> xboxController.getRawAxis(0)));
+      ()-> xboxController.getRawAxis(1),
+      ()-> xboxController.getRawAxis(4)));
     configureBindings();
   }
 

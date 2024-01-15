@@ -35,7 +35,14 @@ public class SwerveJoystickDrive extends Command {
     double leftY = leftYSupplier.get();
     double rightX = rightXSupplier.get();
 
-    driveTrain.swerveDrive(leftX, leftY, rightX);
+    if ((Math.abs(leftX) > 0.09) || (Math.abs(leftY) > 0.09) || (Math.abs(rightX) > 0.09)){ //deadzone
+      driveTrain.swerveDrive(leftX, leftY * -1, rightX);
+    } else {
+      leftX = 0;
+      leftY = 0;
+      rightX = 0;
+      driveTrain.swerveDrive(leftX, leftY * -1, rightX);
+    }
 
 
 

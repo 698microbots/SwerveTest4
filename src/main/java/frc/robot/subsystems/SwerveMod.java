@@ -16,6 +16,7 @@ public class SwerveMod extends SubsystemBase {
   private final TalonFX driveMotor;
   private final TalonFX turnMotor;
   private final CANcoder encoder;
+  private double optimizedAngle = 0;
   private final PIDController pidController;
   public SwerveMod(int driveID, int turnID, int encoderID, PIDController pidController) {
     driveMotor = new TalonFX(driveID);
@@ -40,7 +41,7 @@ public class SwerveMod extends SubsystemBase {
   }
   
   public void drive(double speed, double angle){
-    double currentAngle = encoder.getAbsolutePosition().getValueAsDouble() ; //why from -0.5 to 1? encoder.getAbsolutePosition() should just give ngle
+    double currentAngle = encoder.getAbsolutePosition().getValueAsDouble() * 360 ; //why from -0.5 to 1? encoder.getAbsolutePosition() should just give ngle
     double setPoint = 0;
 
     double setPointAngle = nearestAngle(currentAngle, angle);
@@ -53,18 +54,28 @@ public class SwerveMod extends SubsystemBase {
       speed *= -1; //this will require set inverts later to the motors
     }
 
-    double optimizedAngle = pidController.calculate(currentAngle, setPoint); //when is this called regularly? Possibly in execute function in commands?
+    optimizedAngle = pidController.calculate(currentAngle, setPoint); //when is this called regularly? Possibly in execute function in commands?
     //returns the value from the current to setpoint in a way for motor to read
-    driveMotor.set(speed);
-    turnMotor.set(optimizedAngle);
+    // driveMotor.set(speed);
+    // turnMotor.set(optimizedAngle);
     
   }
 
   public double getCanCoders(){
-    return encoder.getAbsolutePosition().getValueAsDouble();
+    return encoder.getAbsolutePosition().getValueAsDouble() * 360;
   }
 
+  public double getTurnEncoders(){
+    return turnMotor.getPosition().getValueAsDouble();
+  }
 
+  public double getDriveEncoders(){
+    return driveMotor.getPosition().getValueAsDouble();
+  } 
+
+  public double getOptimizedAngle(){
+    return optimizedAngle;
+  }
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
