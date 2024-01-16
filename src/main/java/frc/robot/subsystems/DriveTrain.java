@@ -44,10 +44,10 @@ public class DriveTrain extends SubsystemBase {
   private double frontRightSpeed = 0;
   private double frontLeftSpeed = 0;  
   
-   private double backRightAngle = 0;
-   private double backLeftAngle = 0;
-   private double frontRightAngle = 0;
-   private double frontLeftAngle = 0;  
+  private double backRightAngle = 0;
+  private double backLeftAngle = 0;
+  private double frontRightAngle = 0;
+  private double frontLeftAngle = 0;  
   
   public double x0 = 0; // x velocity
   public double y0 = 0; // y velocity
@@ -117,7 +117,7 @@ public class DriveTrain extends SubsystemBase {
     BR.drive(backRightSpeed, (backRightAngle + brOffset));
     BL.drive(backLeftSpeed, (backLeftAngle + blOffset));
     FR.drive(frontRightSpeed, (frontRightAngle + frOffset));
-    FL.drive(frontLeftSpeed, (frontLeftAngle + flOffset));   
+    // FL.drive(frontLeftSpeed, (frontLeftAngle + flOffset));   
   }
 
   
@@ -198,6 +198,13 @@ public class DriveTrain extends SubsystemBase {
     return y0;
   }
 
+  public void stopAllMods(){
+    FL.stopMod();
+    BL.stopMod();
+    BR.stopMod();
+    BL.stopMod();
+
+  }
   @Override
   public void periodic() {
     // This method will be called once per scheduler run

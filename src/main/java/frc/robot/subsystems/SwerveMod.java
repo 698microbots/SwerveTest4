@@ -41,7 +41,7 @@ public class SwerveMod extends SubsystemBase {
   }
   
   public void drive(double speed, double angle){
-    double currentAngle = encoder.getAbsolutePosition().getValueAsDouble() * 360 ; //why from -0.5 to 1? encoder.getAbsolutePosition() should just give ngle
+    double currentAngle = getCanCoders() ; //why from -0.5 to 1? encoder.getAbsolutePosition() should just give ngle
     double setPoint = 0;
 
     double setPointAngle = nearestAngle(currentAngle, angle);
@@ -54,10 +54,14 @@ public class SwerveMod extends SubsystemBase {
       speed *= -1; //this will require set inverts later to the motors
     }
 
-    optimizedAngle = pidController.calculate(currentAngle, setPoint); //when is this called regularly? Possibly in execute function in commands?
+    optimizedAngle = (pidController.calculate(currentAngle, setPoint) * 2) / 100; //when is this called regularly? Possibly in execute function in commands?
     //returns the value from the current to setpoint in a way for motor to read
-    // driveMotor.set(speed);
-    // turnMotor.set(optimizedAngle);
+    
+    if (Math.abs(optimizedAngle) > 1){
+      optimizedAngle = 1 * Math.signum(optimizedAngle); // limit angle speed
+    }
+    driveMotor.set(speed);
+    turnMotor.set(optimizedAngle);
     
   }
 
@@ -75,6 +79,11 @@ public class SwerveMod extends SubsystemBase {
 
   public double getOptimizedAngle(){
     return optimizedAngle;
+  }
+
+  public void stopMod(){
+    turnMotor.set(0);
+    driveMotor.set(0);
   }
   @Override
   public void periodic() {

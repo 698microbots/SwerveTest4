@@ -13,6 +13,9 @@ public class SwerveJoystickDrive extends Command {
   /** Creates a new SwerveJoystickDrive. */
   private final DriveTrain driveTrain;
   private final Supplier<Double> leftXSupplier, leftYSupplier, rightXSupplier;
+  private double tempLeftX = 0;
+  private double tempLeftY = 0;
+  private double tempRightX = 0;
   public SwerveJoystickDrive(DriveTrain driveTrain, Supplier<Double> leftXSupplier, Supplier<Double> leftYSupplier, Supplier<Double> rightXSupplier) {
     // Use addRequirements() here to declare subsystem dependencies.
     this.driveTrain = driveTrain;
@@ -35,13 +38,34 @@ public class SwerveJoystickDrive extends Command {
     double leftY = leftYSupplier.get();
     double rightX = rightXSupplier.get();
 
-    if ((Math.abs(leftX) > 0.09) || (Math.abs(leftY) > 0.09) || (Math.abs(rightX) > 0.09)){ //deadzone
+    // if (!(tempLeftX == leftX) || !(tempLeftY == leftY) || !(tempRightX == rightX)){
+    //   if ((Math.abs(leftX) > 0.12) || (Math.abs(leftY) > 0.12) || (Math.abs(rightX) > 0.12)){ //deadzone
+    //     driveTrain.swerveDrive(leftX, leftY * -1, rightX);
+    //     tempLeftX = leftX;
+    //     tempLeftY = leftY;
+    //     tempRightX = rightX;
+    //     System.out.println("IT IS RUNNING!!!");
+    //   } 
+    // } else {
+    //     leftX = 0;
+    //     leftY = 0;
+    //     rightX = 0;
+    //     driveTrain.swerveDrive(leftX, leftY * -1, rightX); 
+    //     System.out.println("IT IS STOPPED!!!");
+    // }
+    if ((Math.abs(leftX) > 0.12) || (Math.abs(leftY * -1) > 0.12) || (Math.abs(rightX) > 0.12)){ //deadzone
       driveTrain.swerveDrive(leftX, leftY * -1, rightX);
+      tempLeftX = leftX;
+      tempLeftY = leftY;
+      tempRightX = rightX;
+      System.out.println("IT IS RUNNING!!!");
     } else {
       leftX = 0;
       leftY = 0;
       rightX = 0;
       driveTrain.swerveDrive(leftX, leftY * -1, rightX);
+      System.out.println("IT IS STOPPED!!!");
+
     }
 
 
@@ -50,7 +74,12 @@ public class SwerveJoystickDrive extends Command {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {}
+  public void end(boolean interrupted) {
+
+
+
+
+  }
 
   // Returns true when the command should end.
   @Override
