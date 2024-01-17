@@ -117,7 +117,7 @@ public class DriveTrain extends SubsystemBase {
     BR.drive(backRightSpeed, (backRightAngle + brOffset));
     BL.drive(backLeftSpeed, (backLeftAngle + blOffset));
     FR.drive(frontRightSpeed, (frontRightAngle + frOffset));
-    // FL.drive(frontLeftSpeed, (frontLeftAngle + flOffset));   
+    FL.drive(frontLeftSpeed, (frontLeftAngle + flOffset));   
   }
 
   
@@ -198,7 +198,7 @@ public class DriveTrain extends SubsystemBase {
     return y0;
   }
 
-  public void stopAllMods(){
+  public void stopAllMods(){ //SHOULD JUST STOP PALL DRIVE MOTORS MAKE THAT CHANGE
     FL.stopMod();
     BL.stopMod();
     BR.stopMod();

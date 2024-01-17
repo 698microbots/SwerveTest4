@@ -17,8 +17,8 @@ public final class Constants {
     public static final int kDriverControllerPort = 0;
   }
   //angle optimization pid values
-  public static final double kp = 0.63;
-  public static final double ki = 0.0001;
+  public static final double kp = 0.63; //.63
+  public static final double ki = 0.0001; //.0001
   public static final double kd = 0;
 
   //motor & encoder values
