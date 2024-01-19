@@ -5,8 +5,10 @@
 package frc.robot.subsystems;
 
 
+import com.ctre.phoenix6.controls.ControlRequest;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
+import com.ctre.phoenix6.signals.ControlModeValue;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -22,6 +24,8 @@ public class SwerveMod extends SubsystemBase {
     driveMotor = new TalonFX(driveID);
     turnMotor = new TalonFX(turnID);
     encoder = new CANcoder(encoderID);
+    // turnMotor.setControl();
+
     this.pidController = pidController;
     pidController.enableContinuousInput(-180, 180); //testing if this works here move to beginning of drive if not work
   }
@@ -44,6 +48,10 @@ public class SwerveMod extends SubsystemBase {
     double currentAngle = getCanCoders() ; //why from -0.5 to 1? encoder.getAbsolutePosition() should just give ngle
     double setPoint = 0;
 
+    // if (angle <= 180){
+    //   angle = Math.abs(angle) + 180;
+    // }
+
     double setPointAngle = nearestAngle(currentAngle, angle);
     double setPointAngleOpposite = nearestAngle(currentAngle, angle + 180); //if it can go a shorter angle in the opposite 
 
@@ -57,9 +65,9 @@ public class SwerveMod extends SubsystemBase {
     optimizedAngle = (pidController.calculate(currentAngle, setPoint) * 2) / 100; //when is this called regularly? Possibly in execute function in commands?
     //returns the value from the current to setpoint in a way for motor to read
     
-    if (Math.abs(optimizedAngle) > 1){
-      optimizedAngle = 1 * Math.signum(optimizedAngle); // limit angle speed
-    }
+    // if (Math.abs(optimizedAngle) > 1){
+    //   optimizedAngle = 1 * Math.signum(optimizedAngle); // limit angle speed
+    // }
     driveMotor.set(speed);
     turnMotor.set(optimizedAngle);
     

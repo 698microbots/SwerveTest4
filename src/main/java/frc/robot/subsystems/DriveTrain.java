@@ -73,15 +73,15 @@ public class DriveTrain extends SubsystemBase {
     x0 = -leftY * Math.sin(getRobotAngle()) + leftX * Math.cos(getRobotAngle()); //sin() and cos() need radians 
     y0 = leftY * Math.cos(getRobotAngle()) + leftX * Math.sin(getRobotAngle()); // field centric?
 
-    double a = x0 - rightX * (L / radius);
-    double b = x0 + rightX * (L / radius);
-    double c = y0 - rightX * (W / radius);
-    double d = y0 + rightX * (W / radius);
+    double a = x0 - rightX * (L / radius); // 0
+    double b = x0 + rightX * (L / radius); // 0
+    double c = y0 - rightX * (W / radius); // 1
+    double d = y0 + rightX * (W / radius); // 1
 
-    backRightSpeed = Math.sqrt((a*a) + (d*d));
-    backLeftSpeed = Math.sqrt((a*a) + (c*c));
-    frontRightSpeed = Math.sqrt((b*b) + (d*d));
-    frontLeftSpeed = Math.sqrt((b*b) + (c*c));
+    backRightSpeed = Math.sqrt((a*a) + (d*d)); //1
+    backLeftSpeed = Math.sqrt((a*a) + (c*c)); // 1
+    frontRightSpeed = Math.sqrt((b*b) + (d*d)); //1
+    frontLeftSpeed = Math.sqrt((b*b) + (c*c)); //1
 
     double maxBackSpeed = Math.max(backLeftSpeed, backRightSpeed);
     double maxFrontSpeed = Math.max(frontLeftSpeed, frontRightSpeed);
@@ -93,8 +93,9 @@ public class DriveTrain extends SubsystemBase {
         frontRightSpeed = frontRightSpeed / maxSpeed;
         frontLeftSpeed = frontLeftSpeed / maxSpeed;
     }   
-    backRightAngle = Math.atan2(a, d) * (180 / Math.PI); //Math.atan returns -pi to pi, have to convert to degrees
-    backLeftAngle = Math.atan2(a, c) * (180 / Math.PI);
+    ////Math.atan returns -pi to pi, have to convert to degrees
+    backRightAngle = Math.atan2(a, d) * (180 / Math.PI) ;  //multiply by -1 with wrong ids
+    backLeftAngle = Math.atan2(a, c) * (180 / Math.PI); // multiply by -1 with wrong ides
     frontRightAngle = Math.atan2(b, d) * (180 / Math.PI);
     frontLeftAngle = Math.atan2(b, c) * (180 / Math.PI);
     
@@ -114,15 +115,26 @@ public class DriveTrain extends SubsystemBase {
     // "*****************\n"    
     // ); 
     
-    BR.drive(backRightSpeed, (backRightAngle + brOffset));
-    BL.drive(backLeftSpeed, (backLeftAngle + blOffset));
-    FR.drive(frontRightSpeed, (frontRightAngle + frOffset));
-    FL.drive(frontLeftSpeed, (frontLeftAngle + flOffset));   
+    // System.out.println("A:" + a);
+    // System.out.println("B:" + b);
+    // System.out.println("C:" + c);
+    // System.out.println("D:" + d);
+
+    BR.drive(backRightSpeed, backRightAngle );
+    BL.drive(backLeftSpeed, backLeftAngle);
+    FR.drive(frontRightSpeed, frontRightAngle );
+    FL.drive(frontLeftSpeed, frontLeftAngle);   
   }
 
   
   public double getRobotAngle(){
-    return navx.getYaw() * (Math.PI/ 180); // -180 to 180 degrees
+    double angle = navx.getYaw();
+
+    if (angle < 0){
+      angle = (360 - Math.abs(angle));
+    }
+    
+    return angle * (Math.PI / 180); // -180 to 180 degrees
   }
 
   public double getFLCanCoders(){

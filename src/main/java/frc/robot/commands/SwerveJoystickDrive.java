@@ -34,9 +34,9 @@ public class SwerveJoystickDrive extends Command {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    double leftX = leftXSupplier.get();
-    double leftY = leftYSupplier.get();
-    double rightX = rightXSupplier.get();
+    double leftX = leftXSupplier.get() * .2;
+    double leftY = leftYSupplier.get() * .2;
+    double rightX = rightXSupplier.get() * .2;
 
     // if (!(tempLeftX == leftX) || !(tempLeftY == leftY) || !(tempRightX == rightX)){
     //   if ((Math.abs(leftX) > 0.12) || (Math.abs(leftY) > 0.12) || (Math.abs(rightX) > 0.12)){ //deadzone
@@ -53,20 +53,36 @@ public class SwerveJoystickDrive extends Command {
     //     driveTrain.swerveDrive(leftX, leftY * -1, rightX); 
     //     System.out.println("IT IS STOPPED!!!");
     // }
-    if ((Math.abs(leftX) > 0.12) || (Math.abs(leftY * -1) > 0.12) || (Math.abs(rightX) > 0.12)){ //deadzone
-      driveTrain.swerveDrive(leftX, leftY * -1, rightX);
-      tempLeftX = leftX;
-      tempLeftY = leftY;
-      tempRightX = rightX;
-      System.out.println("IT IS RUNNING!!!");
-    } else {
-      leftX = 0;
-      leftY = 0;
-      rightX = 0;
-      driveTrain.swerveDrive(leftX, leftY * -1, rightX);
-      System.out.println("IT IS STOPPED!!!");
 
+    if (Math.abs(leftX) < .12){
+      leftX = 0;
     }
+    if (Math.abs(leftY) < .12){
+      leftY = 0;
+    }
+    if (Math.abs(rightX) < .12){
+      rightX = 0;
+    }
+  
+  
+    driveTrain.swerveDrive(leftX, leftY, rightX);
+  
+  
+  
+    // if ((Math.abs(leftX) > 0.12) || (Math.abs(leftY * -1) > 0.12) || (Math.abs(rightX) > 0.12)){ //deadzone
+    //   driveTrain.swerveDrive(leftX, leftY * -1, rightX);
+    //   tempLeftX = leftX;
+    //   tempLeftY = leftY;
+    //   tempRightX = rightX;
+    //   System.out.println("IT IS RUNNING!!!");
+    // } else {
+    //   leftX = 0;
+    //   leftY = 0;
+    //   rightX = 0;
+    //   driveTrain.swerveDrive(leftX, leftY * -1, rightX);
+    //   System.out.println("IT IS STOPPED!!!");
+
+    // }
 
 
 

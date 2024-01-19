@@ -61,8 +61,8 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("FR Turn Angle: ", m_robotContainer.driveTrain.getFRTurn());
     SmartDashboard.putNumber("BR Turn Angle: ", m_robotContainer.driveTrain.getBRTurn()); 
    
-    SmartDashboard.putNumber("Left Y", m_robotContainer.xboxController.getRawAxis(0) * -1);
-    SmartDashboard.putNumber("Left X", m_robotContainer.xboxController.getRawAxis(1));
+    SmartDashboard.putNumber("Left Y", m_robotContainer.xboxController.getRawAxis(1) * -1);
+    SmartDashboard.putNumber("Left X", m_robotContainer.xboxController.getRawAxis(0));
     SmartDashboard.putNumber("Right X", m_robotContainer.xboxController.getRawAxis(4));
 
     SmartDashboard.putNumber("FL Turn Speed", m_robotContainer.driveTrain.getFLOpAngle());

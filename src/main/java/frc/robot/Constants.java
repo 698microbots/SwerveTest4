@@ -17,11 +17,11 @@ public final class Constants {
     public static final int kDriverControllerPort = 0;
   }
   //angle optimization pid values
-  public static final double kp = 0.63; //.63
+  public static final double kp = 0.2; //.63 changed to 0.4
   public static final double ki = 0.0001; //.0001
   public static final double kd = 0;
 
-  //motor & encoder values
+  //motor & encoder values turn motors are 7, 2, 0, 4
   public static final int frontLeftDrive = 6;
   public static final int frontLeftTurn = 7;
   public static final int frontLeftCanCoder = 0; //the cancoder ones are probably not right
@@ -30,12 +30,12 @@ public final class Constants {
   public static final int frontRightTurn = 2;
   public static final int frontRightCanCoder = 1; //the cancoder ones are probably not right
   
-  public static final int backLeftDrive = 5;
-  public static final int backLeftTurn = 0;
-  public static final int backLeftCanCoder = 2; //the cancoder ones are probably not right
+  public static final int backLeftDrive = 3; //5
+  public static final int backLeftTurn = 4; // 0
+  public static final int backLeftCanCoder = 3; //the cancoder ones are probably not right
   
-  public static final int backRightDrive = 3;
-  public static final int backRightTurn = 4; 
-  public static final int backRightCanCoder = 3; //the cancoder ones are probably not right
+  public static final int backRightDrive = 5; // 3
+  public static final int backRightTurn = 0;  //4
+  public static final int backRightCanCoder = 2; //the cancoder ones are probably not right
 
 }
