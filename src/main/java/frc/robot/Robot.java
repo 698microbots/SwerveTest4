@@ -73,6 +73,11 @@ public class Robot extends TimedRobot {
     SmartDashboard.putNumber("X Velocity", m_robotContainer.driveTrain.getXVelocity());
     SmartDashboard.putNumber("Y Velocity", m_robotContainer.driveTrain.getYVelocity());
 
+    SmartDashboard.putNumber("A", m_robotContainer.driveTrain.getA());
+    SmartDashboard.putNumber("B", m_robotContainer.driveTrain.getB());
+    SmartDashboard.putNumber("C", m_robotContainer.driveTrain.getC());
+    SmartDashboard.putNumber("D", m_robotContainer.driveTrain.getD());
+
 
   }
 

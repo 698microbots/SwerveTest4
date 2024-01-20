@@ -51,18 +51,20 @@ public class DriveTrain extends SubsystemBase {
   
   public double x0 = 0; // x velocity
   public double y0 = 0; // y velocity
+
+  public AHRS navx = new AHRS(I2C.Port.kMXP); // roborio port
+
   //********************** */
   //HOW TO CALCULATE OFFSETS?
   //********************** */
-  private double brOffset = 0; //are these angle offsets?
-  private double blOffset = 0;
-  private double frOffset = 0;
-  private double flOffset = 0;
+  private double a = 0; //are these angle offsets?
+  private double b = 0;
+  private double c = 0;
+  private double d = 0;
   //get the encoders to display the degree that the motors are at, move the motors to the straight position and use the level on phone to make sure it makes it straight facing forward, got the offset, absulte can coders DO NOT RESET
-  private final AHRS navx = new AHRS(I2C.Port.kMXP); // roborio port
+  // private final AHRS navx = new AHRS(I2C.Port.kMXP); // roborio port
   
   public DriveTrain() {
-
   }
 
   public void swerveDrive(double leftX, double leftY, double rightX){
@@ -70,13 +72,16 @@ public class DriveTrain extends SubsystemBase {
     double W = 23; //can do without a square robot? YES
     double radius = Math.sqrt((L*L) + (W*W));
 
-    x0 = -leftY * Math.sin(getRobotAngle()) + leftX * Math.cos(getRobotAngle()); //sin() and cos() need radians 
-    y0 = leftY * Math.cos(getRobotAngle()) + leftX * Math.sin(getRobotAngle()); // field centric?
+    x0 = leftY * Math.sin(getRobotAngle() * Constants.angleToRadians) + leftX * Math.cos(getRobotAngle() * Constants.angleToRadians); //sin() and cos() need radians 
+    y0 = leftY * Math.cos(getRobotAngle() * Constants.angleToRadians) - leftX * Math.sin(getRobotAngle() * Constants.angleToRadians); // field centric?
+    //BELOW WORKS FOR FACING 90/270 WITHOUT REVERSING CONTROLS
+    // x0 = leftY * Math.sin(getRobotAngle() * Constants.angleToRadians) + leftX * Math.cos(getRobotAngle() * Constants.angleToRadians);
+    // y0 = leftY * Math.cos(getRobotAngle() * Constants.angleToRadians) - leftX * Math.sin(getRobotAngle() * Constants.angleToRadians); 
 
-    double a = x0 - rightX * (L / radius); // 0
-    double b = x0 + rightX * (L / radius); // 0
-    double c = y0 - rightX * (W / radius); // 1
-    double d = y0 + rightX * (W / radius); // 1
+    a = x0 - rightX * (L / radius);
+    b = x0 + rightX * (L / radius);
+    c = y0 - rightX * (W / radius); //something is wrong here the values should not change when the bot goes straight forward, the cause of the drift
+    d = y0 + rightX * (W / radius);
 
     backRightSpeed = Math.sqrt((a*a) + (d*d)); //1
     backLeftSpeed = Math.sqrt((a*a) + (c*c)); // 1
@@ -118,11 +123,11 @@ public class DriveTrain extends SubsystemBase {
     // System.out.println("A:" + a);
     // System.out.println("B:" + b);
     // System.out.println("C:" + c);
-    // System.out.println("D:" + d);
+    // System.out.println("D:" + d); 
 
-    BR.drive(backRightSpeed, backRightAngle );
+    BR.drive(backRightSpeed, backRightAngle); //off by about 32 degrees
     BL.drive(backLeftSpeed, backLeftAngle);
-    FR.drive(frontRightSpeed, frontRightAngle );
+    FR.drive(frontRightSpeed, frontRightAngle);
     FL.drive(frontLeftSpeed, frontLeftAngle);   
   }
 
@@ -134,7 +139,7 @@ public class DriveTrain extends SubsystemBase {
       angle = (360 - Math.abs(angle));
     }
     
-    return angle * (Math.PI / 180); // -180 to 180 degrees
+    return angle; // 0-360 NOT THE PROBLEM WITH DRIFT
   }
 
   public double getFLCanCoders(){
@@ -208,6 +213,22 @@ public class DriveTrain extends SubsystemBase {
 
   public double getYVelocity(){
     return y0;
+  }
+
+  public double getA(){
+    return a;
+  }
+
+  public double getB(){
+    return b;
+  }
+
+  public double getC(){
+    return c;
+  }
+
+  public double getD(){
+    return d;
   }
 
   public void stopAllMods(){ //SHOULD JUST STOP PALL DRIVE MOTORS MAKE THAT CHANGE

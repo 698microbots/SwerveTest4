@@ -9,6 +9,7 @@ import com.ctre.phoenix6.controls.ControlRequest;
 import com.ctre.phoenix6.hardware.CANcoder;
 import com.ctre.phoenix6.hardware.TalonFX;
 import com.ctre.phoenix6.signals.ControlModeValue;
+import com.ctre.phoenix6.signals.NeutralModeValue;
 
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -24,6 +25,9 @@ public class SwerveMod extends SubsystemBase {
     driveMotor = new TalonFX(driveID);
     turnMotor = new TalonFX(turnID);
     encoder = new CANcoder(encoderID);
+    driveMotor.setNeutralMode(NeutralModeValue.Brake);
+    turnMotor.setNeutralMode(NeutralModeValue.Brake);
+    
     // turnMotor.setControl();
 
     this.pidController = pidController;
@@ -68,8 +72,9 @@ public class SwerveMod extends SubsystemBase {
     // if (Math.abs(optimizedAngle) > 1){
     //   optimizedAngle = 1 * Math.signum(optimizedAngle); // limit angle speed
     // }
+
     driveMotor.set(speed);
-    turnMotor.set(optimizedAngle);
+    turnMotor.set(optimizedAngle); //does not effet the drift maybe gears are different tightness?
     
   }
 

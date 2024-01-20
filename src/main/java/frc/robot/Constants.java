@@ -16,12 +16,14 @@ public final class Constants {
   public static class OperatorConstants {
     public static final int kDriverControllerPort = 0;
   }
+  public static final double angleToRadians = (Math.PI/180);
+  public static final double radiansToAngle = (180/Math.PI);
   //angle optimization pid values
   public static final double kp = 0.2; //.63 changed to 0.4
-  public static final double ki = 0.0001; //.0001
+  public static final double ki = 0.001; //.0001
   public static final double kd = 0;
 
-  //motor & encoder values turn motors are 7, 2, 0, 4
+  //values turn motors are 7, 2, 0, 4
   public static final int frontLeftDrive = 6;
   public static final int frontLeftTurn = 7;
   public static final int frontLeftCanCoder = 0; //the cancoder ones are probably not right
